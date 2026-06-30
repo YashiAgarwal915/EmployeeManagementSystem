@@ -3,8 +3,11 @@ package com.yashi.ems.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.yashi.ems.dto.DepartmentRequestDTO;
 import com.yashi.ems.dto.DepartmentResponseDTO;
@@ -40,8 +43,12 @@ public class DepartmentServiceImpl implements DepartmentService{
 		return mapToResponseDTO(savedDepartment);
 	}
 	@Override
-	public List<DepartmentResponseDTO> getAllDepartments() {
-		return departmentRepository.findAll().stream().map(this::mapToResponseDTO).toList();
+	public Page<DepartmentResponseDTO> getAllDepartments(int page,int size,String sortBy,String direction) {
+		Sort sort=direction.equalsIgnoreCase("desc")
+				? Sort.by(sortBy).descending():Sort.by(sortBy).ascending();
+		Pageable pageable=PageRequest.of(page, size,sort);
+		Page<Department> deptPage=departmentRepository.findAll(pageable);
+		return deptPage.map(this::mapToResponseDTO);
 	}
 	@Override
 	public DepartmentResponseDTO getDepartmentById(Integer id) {

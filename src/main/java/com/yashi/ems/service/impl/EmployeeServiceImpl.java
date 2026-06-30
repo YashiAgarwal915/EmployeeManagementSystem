@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.yashi.ems.dto.EmployeeRequestDTO;
@@ -47,9 +51,12 @@ public class EmployeeServiceImpl implements EmployeeService {
 		}
 	
 	@Override
-	public List<EmployeeResponseDTO> getAllEmployees(){
-		return employeeRepository.findAll().stream()
-				.map(this::mapToResponseDTO).toList();
+	public Page<EmployeeResponseDTO> getAllEmployees(int page,int size,String sortBy,String direction){
+		Sort sort=direction.equalsIgnoreCase("desc")?Sort.by(sortBy).descending():Sort.by(sortBy).ascending();
+		Pageable pageable=PageRequest.of(page, size,sort);
+		Page<Employee> employeePage=employeeRepository.findAll(pageable);
+		return employeePage.map(this::mapToResponseDTO);
+
 	}
 
 	@Override

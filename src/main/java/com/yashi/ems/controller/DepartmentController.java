@@ -2,6 +2,7 @@ package com.yashi.ems.controller;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -37,9 +38,10 @@ public class DepartmentController {
 	}
 	
 	@GetMapping
-	public ResponseEntity<List<DepartmentResponseDTO>> getAllDepartments(){
-		List<DepartmentResponseDTO> list= departmentService.getAllDepartments();
-		return ResponseEntity.status(HttpStatus.OK).body(list);
+	public ResponseEntity<Page<DepartmentResponseDTO>> getAllDepartments(@RequestParam(defaultValue="0") int page,@RequestParam(defaultValue="5") int size, 
+			@RequestParam(defaultValue="id") String sortBy,@RequestParam(defaultValue="asc") String direction){
+		Page<DepartmentResponseDTO> deptPage= departmentService.getAllDepartments(page,size,sortBy,direction);
+		return ResponseEntity.status(HttpStatus.OK).body(deptPage);
 	}
 	
 	@GetMapping("/{id}")
