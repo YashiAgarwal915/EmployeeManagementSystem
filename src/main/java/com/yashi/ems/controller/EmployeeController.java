@@ -62,5 +62,22 @@ public class EmployeeController {
 		return ResponseEntity.noContent().build();
 	}
 	
+	@GetMapping("/search")
+	public ResponseEntity<List<EmployeeResponseDTO>> searchEmployeeByName(@RequestParam String name){
+		List<EmployeeResponseDTO> employees=employeeService.searchEmployeesByName(name);
+		return ResponseEntity.ok(employees);
+	}
+	
+	@GetMapping("/email")
+	public ResponseEntity<EmployeeResponseDTO> searchEmployeeByEmail(@RequestParam String email){
+		EmployeeResponseDTO employee=employeeService.searchEmployeeByEmail(email);
+		return ResponseEntity.ok(employee);
+	}
+	
+	@GetMapping("/departmentName")
+	public ResponseEntity<List<EmployeeResponseDTO>> searchEmployeeByDepartmentName(@RequestParam String departmentName){
+		List<EmployeeResponseDTO> employees=employeeService.searchEmployeesByDepartmentName(departmentName);
+		return ResponseEntity.ok(employees);
+	}
 
 }

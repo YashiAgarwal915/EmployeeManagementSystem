@@ -61,4 +61,10 @@ public class DepartmentController {
 		departmentService.deleteDepartment(id);
 		return ResponseEntity.noContent().build();
 	}
+	
+	@GetMapping("/search")
+	public ResponseEntity<List<DepartmentResponseDTO>> searchDepartment(@RequestParam String keyword) {
+		List<DepartmentResponseDTO> departments=departmentService.searchDepartment(keyword);
+		return ResponseEntity.ok(departments);
+	}
 }

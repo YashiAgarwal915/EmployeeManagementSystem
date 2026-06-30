@@ -68,4 +68,8 @@ public class DepartmentServiceImpl implements DepartmentService{
 		departmentRepository.deleteById(id);
 		
 	}
+	@Override
+	public List<DepartmentResponseDTO> searchDepartment(String keyword) {
+		return departmentRepository.searchDepartment(keyword).stream().map(this::mapToResponseDTO).toList();
+	}
 }

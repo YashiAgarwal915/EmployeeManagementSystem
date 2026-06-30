@@ -14,4 +14,5 @@ public interface DepartmentService {
 	DepartmentResponseDTO getDepartmentById(Integer id);
 	DepartmentResponseDTO updateDepartment(Integer id, DepartmentRequestDTO departmentRequestDTO);
 	void deleteDepartment(Integer id);
+	List<DepartmentResponseDTO> searchDepartment(String keyword);
 }

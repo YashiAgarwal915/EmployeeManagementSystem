@@ -15,5 +15,7 @@ public interface EmployeeService {
 	EmployeeResponseDTO getEmployeeById(Integer id);
 	EmployeeResponseDTO updateEmployee(Integer id, EmployeeRequestDTO employeeRequestDTO);
 	void deleteEmployee(Integer id);
-
+	List<EmployeeResponseDTO> searchEmployeesByName(String name);
+	EmployeeResponseDTO searchEmployeeByEmail(String email);
+	List<EmployeeResponseDTO> searchEmployeesByDepartmentName(String departmentName);
 }

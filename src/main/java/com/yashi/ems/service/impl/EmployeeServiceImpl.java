@@ -89,4 +89,24 @@ public class EmployeeServiceImpl implements EmployeeService {
 		Employee updatedEmployee=employeeRepository.save(existingEmployee);
 		return mapToResponseDTO(updatedEmployee);
 	}
+	
+	@Override
+	public List<EmployeeResponseDTO> searchEmployeesByName(String name){
+		return employeeRepository.findByNameContaining(name)
+								.stream().map(this::mapToResponseDTO)
+								.toList();
+	}
+
+	@Override
+	public EmployeeResponseDTO searchEmployeeByEmail(String email) {
+		Employee employee=employeeRepository.findByEmail(email).orElseThrow(()->new ResourceNotFoundException("Employee not found with email: "+email));
+		return mapToResponseDTO(employee);
+	}
+
+	@Override
+	public List<EmployeeResponseDTO> searchEmployeesByDepartmentName(String departmentName) {
+		return employeeRepository.findByDepartmentDepartmentName(departmentName)
+								.stream().map(this::mapToResponseDTO)
+								.toList();
+	}
 }
